@@ -4,6 +4,7 @@ title : Learning Spring 01
 categaries : java
 tags : java spring maven
 ---
+
 * content
 { : toc }
 
@@ -54,7 +55,7 @@ public class Hello {
 		System.out.println("hello " + this.object);
 	}
 }
-```
+```java
 `Main.java`代码如下：
 ```
 package pre.huangjs.spring.spring01;
@@ -99,7 +100,7 @@ hello world
 ![](http://omsc27rax.bkt.clouddn.com/mxsgl06zg7jvei5smvjc35hoaj.png)
 ![](http://omsc27rax.bkt.clouddn.com/s8fe75b17n0l7jru0n45l6noec.png)
 修改*Main.java*类
-```
+```java
 package pre.huangjs.spring.spring01;
 
 import org.springframework.context.ApplicationContext;
@@ -159,7 +160,7 @@ spring支持三种依赖注入：
 
 新建*Car.java*
 
-```
+```java
 package pre.huangjs.spring.spring01;
 
 public class Car {
@@ -180,7 +181,7 @@ public class Car {
 }
 ```
 修改*applicationContext.xml*文件，添加Bean
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -200,7 +201,7 @@ public class Car {
 </beans>
 ```
 新建*Main.java*，添加获取*id*为*car*的Bean
-```
+```java
 package pre.huangjs.spring.spring01;
 
 import org.springframework.context.ApplicationContext;
@@ -221,7 +222,7 @@ Car [type=小汽车, seat=4, price=0.0]
 
 修改*applicationContext.xml*文件，再配置一个Bean，
 
-```
+```xml
 	<!-- 设置一个售价为100000的卡车对象 -->
 	<bean id="car1" class="pre.huangjs.spring.spring01.Car">
 		<constructor-arg value="卡车"></constructor-arg>
@@ -232,7 +233,7 @@ Car [type=小汽车, seat=4, price=0.0]
 
 修改*Main01.java*
 
-```
+```xml
 // 获取id为car1的Bean
 Car myCar1 = (Car)ctx.getBean("car1");
 System.out.println(myCar1);
@@ -249,7 +250,7 @@ Car [type=卡车, seat=100000, price=0.0]
 
 * 添加type属性
 
-```
+```xml
 	<!-- 设置一个售价为100000的卡车对象 -->
 	<bean id="car1" class="pre.huangjs.spring.spring01.Car">
 		<constructor-arg value="卡车"></constructor-arg>
@@ -259,7 +260,7 @@ Car [type=卡车, seat=100000, price=0.0]
  
 * 添加name属性（最常用）
 
-```
+```xml
 	<!-- 设置一个售价为100000的卡车对象 -->
 	<bean id="car1" class="pre.huangjs.spring.spring01.Car">
 		<constructor-arg value="卡车"></constructor-arg>
@@ -268,7 +269,7 @@ Car [type=卡车, seat=100000, price=0.0]
 ```
 
 其次还有一种方法用来区分重载的构造器，为了说明清楚现在*Car.java*中再写一个构造器
-```
+```java
 	public Car(String type, int seat, double price) {
 		super();
 		this.type = type;
@@ -279,7 +280,7 @@ Car [type=卡车, seat=100000, price=0.0]
 
 修改*applicationContext.xml*文件，添加一个*index*属性
 
-```
+```xml
 <!-- 设置一个售价为200000的、20座的公交车对象 -->
 	<bean id="car2" class="pre.huangjs.spring.spring01.Car">
 		<constructor-arg value="公交车"></constructor-arg>
@@ -290,7 +291,7 @@ Car [type=卡车, seat=100000, price=0.0]
 
 上面这一段如果使用直接赋值的方法，代码如下：
 
-```
+```xml
 	<bean id="car2" class="pre.huangjs.spring.spring01.Car">
 		<constructor-arg value="公交车"></constructor-arg>
 		<constructor-arg value="20"></constructor-arg>
@@ -310,7 +311,7 @@ Car [type=卡车, seat=0, price=100000.0]
 Car [type=公交车, seat=20, price=200000.0]
 ```
 注意index属性工作过程是这样的：先由**参数个数**选定某一个构造器，然后再依据*index'*标签的顺序来赋值，不能够妄想指定这是设置第一个属性，这是设置第三个属性的，然后依据这个规定去找合适的构造器，例如我想配置一个“售价为400000的大卡车对象”，制定*index=2*想要它来找到第二个构造器（参数列表为：String type, double price），但是会提示错误
-```
+```xml
 	<!-- 设置一个售价为400000的大卡车对象 -->
 	<bean id="car3" class="pre.huangjs.spring.spring01.Car">
 		<constructor-arg value="大卡车"></constructor-arg>
