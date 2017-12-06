@@ -5,7 +5,6 @@ categories: JavaFX
 tags: JavaFX
 author: Jiashun Huang
 ---
-
 * content
 {:toc}
 
